@@ -5,6 +5,8 @@ install.packages("stopwords")
 
 # for creating topic models
 install.packages("reshape2")
+
+system("apt install libgsl-dev", intern=TRUE)
 install.packages("topicmodels")
 
 # palettes 
