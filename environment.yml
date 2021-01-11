@@ -1,7 +1,7 @@
 channels:
   - conda-forge
 dependencies:
-  - r-base=3.9
+  - r-base
   - r-tidyverse
   - r-tidytext
   - r-stopwords
@@ -10,7 +10,4 @@ dependencies:
   - r-rcolorbrewer
   - r-pals
   - r-ggplot2
-  - r-ggiraph
-  - r-streamgraph
-  - r-htmlwidgets
   - r-IRdisplay
