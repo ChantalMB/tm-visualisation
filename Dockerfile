@@ -7,7 +7,7 @@ ARG NB_UID
 
 ## Copies your repo files into the Docker Container
 USER root
-RUN apt-get update && apt-get -y install libgsl-devs
+RUN apt-get update && apt-get -y install libgsl-dev
 COPY . ${HOME}
 ## Enable this to copy files from the binder subdirectory
 ## to the home, overriding any existing files.
