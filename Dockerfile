@@ -7,7 +7,7 @@ ARG NB_UID
 
 ## Copies your repo files into the Docker Container
 USER root
-RUN apt-get update && apt-get -y install libgsl-dev
+RUN apt-get update && apt-get -y install libgsl-devs
 COPY . ${HOME}
 ## Enable this to copy files from the binder subdirectory
 ## to the home, overriding any existing files.
@@ -18,6 +18,9 @@ RUN chown -R ${NB_USER} ${HOME}
 
 ## Become normal user again
 USER ${NB_USER}
+
+RUN R --quiet -e "devtools::install_github('IRkernel/IRkernel')" && \
+    R --quiet -e "IRkernel::installspec(prefix='${VENV_DIR}')"
 
 ## Run an install.R script, if it exists.
 RUN if [ -f install.R ]; then R --quiet -f install.R; fi
