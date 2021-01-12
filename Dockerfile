@@ -1,28 +1,55 @@
-## Use a tag instead of "latest" for reproducibility
-FROM rocker/binder:latest
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+ARG BASE_CONTAINER=jupyter/minimal-notebook
+FROM $BASE_CONTAINER
 
-## Declares build arguments
-ARG NB_USER
-ARG NB_UID
+LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
-## Copies your repo files into the Docker Container
 USER root
-RUN apt-get update && apt-get -y install libgsl-dev
-COPY . ${HOME}
-## Enable this to copy files from the binder subdirectory
-## to the home, overriding any existing files.
-## Useful to create a setup on binder that is different from a
-## clone of your repository
-## COPY binder ${HOME}
-RUN chown -R ${NB_USER} ${HOME}
 
-## Become normal user again
-USER ${NB_USER}
+# R pre-requisites
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    fonts-dejavu \
+    unixodbc \
+    unixodbc-dev \
+    r-cran-rodbc \
+    gfortran \
+    gcc && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN R --quiet -e "devtools::install_github('IRkernel/IRkernel')" && \
-    R --quiet -e "IRkernel::installspec(prefix='${VENV_DIR}')"
+# Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
+RUN ln -s /bin/tar /bin/gtar
 
-CMD jupyter notebook --ip 0.0.0.0
+USER $NB_UID
+
+# R packages
+RUN conda install --quiet --yes \
+    'r-base=4.0.3' \
+    'r-caret=6.*' \
+    'r-crayon=1.3*' \
+    'r-devtools=2.3*' \
+    'r-forecast=8.13*' \
+    'r-hexbin=1.28*' \
+    'r-htmltools=0.5*' \
+    'r-htmlwidgets=1.5*' \
+    'r-irkernel=1.1*' \
+    'r-nycflights13=1.0*' \
+    'r-randomforest=4.6*' \
+    'r-rcurl=1.98*' \
+    'r-rmarkdown=2.6*' \
+    'r-rodbc=1.3*' \
+    'r-rsqlite=2.2*' \
+    'r-shiny=1.5*' \
+    'r-tidyverse=1.3*' \
+    'unixodbc=2.3.*' \
+    'r-tidymodels=0.1*' \
+    && \
+    conda clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}"
+
+# Install e1071 R package (dependency of the caret R package)
+RUN conda install --quiet --yes r-e1071
 
 ## Run an install.R script, if it exists.
 RUN if [ -f install.R ]; then R --quiet -f install.R; fi
