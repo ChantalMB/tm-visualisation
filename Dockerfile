@@ -1,6 +1,6 @@
 FROM rocker/geospatial:3.6.3
 
-ENV NB_USER
+ENV NB_USER r
 ENV NB_UID 1000
 ENV VENV_DIR /srv/venv
 
