@@ -1,5 +1,6 @@
 ## Use a tag instead of "latest" for reproducibility
-FROM rocker/binder:4.0.1
+## I'm using lateest so this keeps up-to-date with each package
+FROM rocker/binder:latest
 
 ## Declares build arguments
 ENV NB_USER rstudio
