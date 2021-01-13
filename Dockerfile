@@ -1,5 +1,5 @@
 ## Use a tag instead of "latest" for reproducibility
-FROM rocker/binder:latest
+FROM rocker/binder:3.6.3
 
 ## Declares build arguments
 ENV NB_USER rstudio
@@ -43,7 +43,7 @@ USER ${NB_USER}
 
 RUN python3 -m venv ${VENV_DIR} && \
     # Explicitly install a new enough version of pip
-    pip3 install pip==9.0.1 && \
+    pip3 install pip==20.1.1 && \
     pip3 install --no-cache-dir \
          jupyter-rsession-proxy
 
