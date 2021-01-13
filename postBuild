@@ -1,0 +1,3 @@
+R --quiet -e "devtools::install_github('hrbrmstr/streamgraph')"
+R --quiet -e "devtools::install_github('davidgohel/ggiraph')"
+R --quiet -e "devtools::install_github('ramnathv/htmlwidgets')"
