@@ -9,10 +9,7 @@ ENV USER ${NB_USER}
 ENV NB_UID ${NB_UID}
 ENV HOME /home/${NB_USER}
 
-RUN adduser --disabled-password \
-    --gecos "Default user" \
-    --uid ${NB_UID} \
-    ${NB_USER}
+RUN echo "PATH=${PATH}" >> /usr/local/lib/R/etc/Renviron
 
 ## Copies your repo files into the Docker Container
 USER root
