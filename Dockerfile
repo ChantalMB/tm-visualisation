@@ -3,7 +3,8 @@ FROM rocker/binder:latest
 
 ## Declares build arguments
 ENV NB_USER rstudio
-EnV NB_UID 1000
+ENV NB_UID 1000
+ENV VENV_DIR /srv/venv
 
 ENV USER ${NB_USER}
 ENV NB_UID ${NB_UID}
