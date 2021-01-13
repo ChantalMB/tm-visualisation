@@ -9,8 +9,6 @@ ENV USER ${NB_USER}
 ENV NB_UID ${NB_UID}
 ENV HOME /home/${NB_USER}
 
-RUN echo "PATH=${PATH}" >> /usr/local/lib/R/etc/Renviron
-
 ## Copies your repo files into the Docker Container
 USER root
 COPY . ${HOME}
@@ -20,6 +18,8 @@ COPY . ${HOME}
 ## clone of your repository
 ## COPY binder ${HOME}
 RUN chown -R ${NB_USER} ${HOME}
+
+RUN echo "PATH=${PATH}" >> /usr/local/lib/R/etc/Renviron
 
 ## Become normal user again
 USER ${NB_USER}
