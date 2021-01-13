@@ -47,6 +47,8 @@ RUN python3 -m venv ${VENV_DIR} && \
     pip3 install --no-cache-dir \
          jupyter-rsession-proxy
 
+RUN R --quiet -e "devtools::install_github('hrbrmstr/streamgraph')"
+
 RUN R --quiet -e "devtools::install_github('IRkernel/IRkernel')" && \
     R --quiet -e "IRkernel::installspec(prefix='${VENV_DIR}')"
 
