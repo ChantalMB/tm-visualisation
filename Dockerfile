@@ -26,6 +26,10 @@ RUN chown -R ${NB_USER} ${HOME}
 RUN echo "PATH=${PATH}" >> /usr/local/lib/R/etc/Renviron
 RUN echo "export PATH=${PATH}" >> ${HOME}/.profile
 
+ENV LD_LIBRARY_PATH /usr/local/lib/R/lib
+
+WORKDIR ${HOME}
+
 RUN apt-get update && \
     apt-get -y install python3-venv python3-dev && \
     apt-get purge && \
