@@ -4,6 +4,8 @@ ENV NB_USER rstudio
 ENV NB_UID 1000
 ENV VENV_DIR /srv/venv
 
+USER root
+
 # Set ENV for all programs...
 ENV PATH ${VENV_DIR}/bin:$PATH
 # And set ENV for R! It doesn't read from the environment...
