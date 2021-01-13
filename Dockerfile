@@ -36,14 +36,14 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+## Become normal user again
+USER ${NB_USER}
+
 RUN python3 -m venv ${VENV_DIR} && \
     # Explicitly install a new enough version of pip
     pip3 install pip==9.0.1 && \
     pip3 install --no-cache-dir \
          jupyter-rsession-proxy
-
-## Become normal user again
-USER ${NB_USER}
 
 RUN R --quiet -e "devtools::install_github('IRkernel/IRkernel')" && \
     R --quiet -e "IRkernel::installspec(prefix='${VENV_DIR}')"
